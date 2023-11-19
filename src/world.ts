@@ -118,3 +118,14 @@ export function worldToString(
   }
   return str;
 }
+
+export function defaultWorld() {
+  let world = createWorld(40, 40);
+  setLiveCells(world, [
+    [9, 9],
+    [9, 10],
+    [9, 11],
+    [10, 10],
+  ]);
+  return world;
+}

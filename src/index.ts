@@ -1,10 +1,9 @@
 import { calcCell } from "./canvas-events.js";
 import { createTimer } from "./timer.js";
 import {
-  createWorld,
+  defaultWorld,
   drawWorld,
   nextGeneration,
-  setLiveCells,
   toggleCell,
 } from "./world.js";
 
@@ -20,13 +19,7 @@ const delayInput = document.getElementById(
 ) as HTMLInputElement;
 
 // setup world
-let world = createWorld(40, 40);
-setLiveCells(world, [
-  [9, 9],
-  [9, 10],
-  [9, 11],
-  [10, 10],
-]);
+let world = defaultWorld();
 
 // setup app variables
 const timer = createTimer();
