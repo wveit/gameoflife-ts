@@ -19,7 +19,7 @@ const delayInput = document.getElementById(
 ) as HTMLInputElement;
 
 // setup world
-let world = createWorld(20, 20);
+let world = createWorld(40, 40);
 setLiveCells(world, [
   [9, 9],
   [9, 10],
@@ -29,10 +29,11 @@ setLiveCells(world, [
 
 // setup app variables
 let isPlaying = false;
-let delay = 1000;
+let delay = 500;
 
 // initial draw
 drawWorld(world, canvas);
+delayInput.value = `${delay}`;
 
 function advance() {
   world = nextGeneration(world);
@@ -57,6 +58,13 @@ function handleCanvasClick(event: MouseEvent) {
   drawWorld(world, canvas);
 }
 
+function handleDelayChange(event: Event) {
+  if (!("target" in event && event.target)) return;
+  const target = event.target as HTMLInputElement;
+  delay = Number(target.value);
+}
+
 advanceButton.onclick = advance;
 playPauseButton.onclick = handlePlayPause;
 canvas.onclick = handleCanvasClick;
+delayInput.onchange = handleDelayChange;
