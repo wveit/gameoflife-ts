@@ -1,4 +1,4 @@
-import { calcCell } from "./canvas-events.js";
+import { calcCellFromEvent } from "./world.js";
 import { createTimer } from "./timer.js";
 import {
   defaultWorld,
@@ -47,7 +47,7 @@ function handlePlayPause() {
 }
 
 function handleCanvasClick(event: MouseEvent) {
-  const cell = calcCell(canvas, world, event);
+  const cell = calcCellFromEvent(canvas, world, event);
   toggleCell(world, cell.x, cell.y);
   drawWorld(world, canvas);
 }

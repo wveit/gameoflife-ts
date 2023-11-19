@@ -109,3 +109,16 @@ export function defaultWorld() {
   ]);
   return world;
 }
+export function calcCellFromEvent(
+  canvas: HTMLCanvasElement,
+  world: World,
+  event: MouseEvent
+) {
+  const canvasX = event.x - canvas.getBoundingClientRect().x;
+  const canvasY = event.y - canvas.getBoundingClientRect().y;
+  const [worldWidth, worldHeight] = worldDimensions(world);
+
+  const x = Math.floor((canvasX / canvas.width) * worldWidth);
+  const y = Math.floor((canvasY / canvas.height) * worldHeight);
+  return { x, y };
+}
