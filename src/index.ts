@@ -1,4 +1,5 @@
 import { calcCell } from "./canvas-events.js";
+import { createTimer } from "./timer.js";
 import {
   createWorld,
   drawWorld,
@@ -28,28 +29,28 @@ setLiveCells(world, [
 ]);
 
 // setup app variables
-let isPlaying = false;
-let delay = 500;
+const timer = createTimer();
+timer.setDelay(500);
 
 // initial draw
 drawWorld(world, canvas);
-delayInput.value = `${delay}`;
+delayInput.value = `${timer.getDelay()}`;
 
 function advance() {
   world = nextGeneration(world);
   drawWorld(world, canvas);
 }
 
-function recursiveAdvance() {
-  if (!isPlaying) return;
-  advance();
-  setTimeout(recursiveAdvance, delay);
-}
+timer.setTimerFunc(advance);
+
 function handlePlayPause() {
-  isPlaying = !isPlaying;
-  if (isPlaying) playPauseButton.innerHTML = "pause";
-  else playPauseButton.innerHTML = "play";
-  recursiveAdvance();
+  if (timer.isRunning()) {
+    timer.stop();
+    playPauseButton.innerHTML = "play";
+  } else {
+    timer.start();
+    playPauseButton.innerHTML = "pause";
+  }
 }
 
 function handleCanvasClick(event: MouseEvent) {
@@ -61,7 +62,7 @@ function handleCanvasClick(event: MouseEvent) {
 function handleDelayChange(event: Event) {
   if (!("target" in event && event.target)) return;
   const target = event.target as HTMLInputElement;
-  delay = Number(target.value);
+  timer.setDelay(Number(target.value));
 }
 
 advanceButton.onclick = advance;
