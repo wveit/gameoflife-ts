@@ -99,26 +99,6 @@ export function drawWorld(world: World, canvas: HTMLCanvasElement) {
   }
 }
 
-function xIfLive(world: World, x: number, y: number) {
-  if (world[x][y]) return "x";
-  return " ";
-}
-
-export function worldToString(
-  world: World,
-  fn: (world: World, x: number, y: number) => string = xIfLive
-) {
-  let str = "";
-  const [width, height] = worldDimensions(world);
-  for (let y = 0; y < height; y++) {
-    for (let x = 0; x < width; x++) {
-      str += fn(world, x, y);
-    }
-    str += "\n";
-  }
-  return str;
-}
-
 export function defaultWorld() {
   let world = createWorld(40, 40);
   setLiveCells(world, [
