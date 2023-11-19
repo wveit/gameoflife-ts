@@ -1,8 +1,10 @@
+import { calcCell } from "./canvas-events.js";
 import {
   createWorld,
   drawWorld,
   nextGeneration,
   setLiveCells,
+  toggleCell,
 } from "./world.js";
 
 const canvas = document.getElementById("main-canvas") as HTMLCanvasElement;
@@ -49,5 +51,12 @@ function handlePlayPause() {
   recursiveAdvance();
 }
 
+function handleCanvasClick(event: MouseEvent) {
+  const cell = calcCell(canvas, world, event);
+  toggleCell(world, cell.x, cell.y);
+  drawWorld(world, canvas);
+}
+
 advanceButton.onclick = advance;
 playPauseButton.onclick = handlePlayPause;
+canvas.onclick = handleCanvasClick;

@@ -1,4 +1,4 @@
-type World = Boolean[][];
+export type World = Boolean[][];
 
 export function createWorld(width: number, height: number): World {
   const world: World = [];
@@ -20,6 +20,10 @@ export function setLiveCells(world: World, coordinateArray: number[][]) {
   for (let [x, y] of coordinateArray) {
     world[x][y] = true;
   }
+}
+
+export function toggleCell(world: World, x: number, y: number) {
+  world[x][y] = !world[x][y];
 }
 
 export function safelyGet(world: World, x: number, y: number) {
@@ -80,7 +84,11 @@ export function drawWorld(world: World, canvas: HTMLCanvasElement) {
     for (let y = 0; y < worldHeight; y++) {
       const canvasY = y * cellHeight;
 
-      if (!world[x][y]) continue;
+      if (!world[x][y]) {
+        context.strokeStyle = "#AAAAAA";
+        context.strokeRect(canvasX, canvasY, cellWidth, cellHeight);
+        continue;
+      }
 
       context.fillStyle = "green";
       context.fillRect(canvasX, canvasY, cellWidth, cellHeight);
